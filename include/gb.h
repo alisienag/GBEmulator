@@ -18,6 +18,6 @@ void gb_rom_load(gb* console, const char* path);
 void gb_rom_unload();
 
 
-void _gb_load(gb* gb, const char* path, unsigned int length, uint16_t start);
+void _gb_load(gb* gb, const char* path, unsigned int length, uint8_t* start);
 
 #endif

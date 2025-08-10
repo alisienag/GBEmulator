@@ -176,7 +176,7 @@ gbemulator: CMakeFiles/gbemulator.dir/src/main.c.o
 gbemulator: CMakeFiles/gbemulator.dir/src/memory.c.o
 gbemulator: CMakeFiles/gbemulator.dir/build.make
 gbemulator: CMakeFiles/gbemulator.dir/compiler_depend.ts
-gbemulator: /usr/lib/libSDL3.so.0.2.18
+gbemulator: /usr/lib/libSDL3.so.0.2.20
 gbemulator: CMakeFiles/gbemulator.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/ali/Programming/Projects/GBEmulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable gbemulator"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gbemulator.dir/link.txt --verbose=$(VERBOSE)

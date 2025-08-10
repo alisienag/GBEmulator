@@ -17,6 +17,18 @@ CMakeFiles/gbemulator.dir/src/cpu.c.o: /home/ali/Programming/Projects/GBEmulator
   /usr/include/bits/pthreadtypes-arch.h \
   /usr/include/bits/pthreadtypes.h \
   /usr/include/bits/select.h \
+  /usr/include/bits/sigaction.h \
+  /usr/include/bits/sigcontext.h \
+  /usr/include/bits/sigevent-consts.h \
+  /usr/include/bits/siginfo-arch.h \
+  /usr/include/bits/siginfo-consts.h \
+  /usr/include/bits/signal_ext.h \
+  /usr/include/bits/signum-arch.h \
+  /usr/include/bits/signum-generic.h \
+  /usr/include/bits/sigstack.h \
+  /usr/include/bits/sigstksz.h \
+  /usr/include/bits/sigthread.h \
+  /usr/include/bits/ss_flags.h \
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
@@ -35,12 +47,19 @@ CMakeFiles/gbemulator.dir/src/cpu.c.o: /home/ali/Programming/Projects/GBEmulator
   /usr/include/bits/types/__locale_t.h \
   /usr/include/bits/types/__mbstate_t.h \
   /usr/include/bits/types/__sigset_t.h \
+  /usr/include/bits/types/__sigval_t.h \
   /usr/include/bits/types/clock_t.h \
   /usr/include/bits/types/clockid_t.h \
   /usr/include/bits/types/cookie_io_functions_t.h \
   /usr/include/bits/types/locale_t.h \
+  /usr/include/bits/types/sig_atomic_t.h \
+  /usr/include/bits/types/sigevent_t.h \
+  /usr/include/bits/types/siginfo_t.h \
   /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/sigval_t.h \
+  /usr/include/bits/types/stack_t.h \
   /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/types/struct_sigstack.h \
   /usr/include/bits/types/struct_timespec.h \
   /usr/include/bits/types/struct_timeval.h \
   /usr/include/bits/types/time_t.h \
@@ -56,6 +75,7 @@ CMakeFiles/gbemulator.dir/src/cpu.c.o: /home/ali/Programming/Projects/GBEmulator
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
+  /usr/include/signal.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
   /usr/include/stdio.h \
@@ -65,6 +85,7 @@ CMakeFiles/gbemulator.dir/src/cpu.c.o: /home/ali/Programming/Projects/GBEmulator
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
   /usr/include/sys/types.h \
+  /usr/include/sys/ucontext.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h
@@ -403,6 +424,7 @@ CMakeFiles/gbemulator.dir/src/main.c.o: /home/ali/Programming/Projects/GBEmulato
   /usr/include/SDL3/SDL_tray.h \
   /usr/include/SDL3/SDL_version.h \
   /usr/include/SDL3/SDL_video.h \
+  /usr/include/bits/atomic_wide_counter.h \
   /usr/include/bits/byteswap.h \
   /usr/include/bits/endian.h \
   /usr/include/bits/endianness.h \
@@ -410,10 +432,16 @@ CMakeFiles/gbemulator.dir/src/main.c.o: /home/ali/Programming/Projects/GBEmulato
   /usr/include/bits/floatn.h \
   /usr/include/bits/libc-header-start.h \
   /usr/include/bits/long-double.h \
+  /usr/include/bits/pthreadtypes-arch.h \
+  /usr/include/bits/pthreadtypes.h \
+  /usr/include/bits/select.h \
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
   /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/struct_mutex.h \
+  /usr/include/bits/struct_rwlock.h \
+  /usr/include/bits/thread-shared-types.h \
   /usr/include/bits/time64.h \
   /usr/include/bits/timesize.h \
   /usr/include/bits/types.h \
@@ -423,10 +451,18 @@ CMakeFiles/gbemulator.dir/src/main.c.o: /home/ali/Programming/Projects/GBEmulato
   /usr/include/bits/types/__fpos_t.h \
   /usr/include/bits/types/__locale_t.h \
   /usr/include/bits/types/__mbstate_t.h \
+  /usr/include/bits/types/__sigset_t.h \
+  /usr/include/bits/types/clock_t.h \
+  /usr/include/bits/types/clockid_t.h \
   /usr/include/bits/types/cookie_io_functions_t.h \
   /usr/include/bits/types/locale_t.h \
   /usr/include/bits/types/mbstate_t.h \
+  /usr/include/bits/types/sigset_t.h \
   /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/types/struct_timespec.h \
+  /usr/include/bits/types/struct_timeval.h \
+  /usr/include/bits/types/time_t.h \
+  /usr/include/bits/types/timer_t.h \
   /usr/include/bits/types/wint_t.h \
   /usr/include/bits/typesizes.h \
   /usr/include/bits/uintn-identity.h \
@@ -444,6 +480,8 @@ CMakeFiles/gbemulator.dir/src/main.c.o: /home/ali/Programming/Projects/GBEmulato
   /usr/include/string.h \
   /usr/include/strings.h \
   /usr/include/sys/cdefs.h \
+  /usr/include/sys/select.h \
+  /usr/include/sys/types.h \
   /usr/include/wchar.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdbool.h \
@@ -526,7 +564,7 @@ gbemulator: /usr/lib/Scrt1.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/crtendS.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/libgcc.a \
   /usr/lib/ld-linux-x86-64.so.2 \
-  /usr/lib/libSDL3.so.0.2.18 \
+  /usr/lib/libSDL3.so.0.2.20 \
   /usr/lib/libc.so.6 \
   /usr/lib/libc_nonshared.a \
   /usr/lib/libm.so.6 \
@@ -550,7 +588,7 @@ CMakeFiles/gbemulator.dir/src/cpu_register.c.o:
 
 /usr/lib/libc.so.6:
 
-/usr/lib/libSDL3.so.0.2.18:
+/usr/lib/libSDL3.so.0.2.20:
 
 /usr/lib/ld-linux-x86-64.so.2:
 
@@ -568,57 +606,83 @@ CMakeFiles/gbemulator.dir/src/cpu_register.c.o:
 
 /usr/include/inttypes.h:
 
-/usr/include/bits/types/wint_t.h:
-
 /usr/include/bits/types/mbstate_t.h:
 
 /usr/include/SDL3/SDL_video.h:
 
 /usr/include/SDL3/SDL_timer.h:
 
-/usr/include/stdio.h:
+/usr/include/SDL3/SDL_time.h:
 
-/usr/include/stdint.h:
+/usr/include/SDL3/SDL_thread.h:
 
-/usr/include/SDL3/SDL_begin_code.h:
+/usr/include/SDL3/SDL_storage.h:
 
-/usr/include/endian.h:
+/usr/include/SDL3/SDL_scancode.h:
 
-/usr/include/bits/types/struct_timeval.h:
+/usr/include/SDL3/SDL_render.h:
 
-CMakeFiles/gbemulator.dir/src/cpu.c.o:
+/usr/include/SDL3/SDL_rect.h:
 
-/usr/include/bits/types/struct_timespec.h:
+/usr/include/SDL3/SDL_power.h:
+
+/usr/include/SDL3/SDL_platform_defines.h:
+
+/usr/include/SDL3/SDL_platform.h:
+
+/usr/include/SDL3/SDL_pixels.h:
+
+/usr/include/SDL3/SDL_pen.h:
+
+/usr/include/SDL3/SDL_misc.h:
+
+/usr/include/bits/signum-arch.h:
+
+/usr/include/bits/types/struct_sigstack.h:
+
+/usr/include/SDL3/SDL_gpu.h:
+
+/usr/include/SDL3/SDL_system.h:
+
+/usr/include/SDL3/SDL_hints.h:
 
 /usr/include/bits/types/locale_t.h:
 
-/usr/lib/crti.o:
+/usr/include/SDL3/SDL_properties.h:
 
-/usr/include/bits/typesizes.h:
+/usr/include/bits/types/cookie_io_functions_t.h:
 
-/usr/include/SDL3/SDL_cpuinfo.h:
+/usr/include/endian.h:
+
+/usr/include/SDL2/SDL_timer.h:
+
+/usr/include/SDL3/SDL_stdinc.h:
+
+/usr/include/bits/types/clockid_t.h:
 
 /home/ali/Programming/Projects/GBEmulator/src/gb.c:
-
-/usr/include/SDL3/SDL_guid.h:
-
-/usr/include/bits/stdio_lim.h:
-
-/usr/include/bits/types/__mbstate_t.h:
-
-/usr/lib/crtn.o:
-
-/usr/include/SDL3/SDL_oldnames.h:
-
-/usr/include/bits/wordsize.h:
 
 /usr/include/bits/types/clock_t.h:
 
 /usr/include/bits/types/__fpos_t.h:
 
-/usr/include/SDL3/SDL_platform_defines.h:
+/usr/include/bits/types/__FILE.h:
 
-/usr/include/bits/pthreadtypes.h:
+/usr/include/bits/types/FILE.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/siginfo-arch.h:
+
+/usr/include/SDL3/SDL_haptic.h:
+
+/home/ali/Programming/Projects/GBEmulator/include/memory.h:
+
+/usr/include/bits/thread-shared-types.h:
+
+/usr/include/bits/types/sigset_t.h:
+
+/usr/include/bits/types/siginfo_t.h:
 
 /usr/include/bits/long-double.h:
 
@@ -626,113 +690,13 @@ CMakeFiles/gbemulator.dir/src/cpu.c.o:
 
 /usr/include/bits/floatn-common.h:
 
-/usr/include/bits/types/sigset_t.h:
+/usr/lib/crtn.o:
 
-/usr/include/SDL3/SDL_power.h:
+/usr/include/SDL3/SDL_oldnames.h:
 
-/usr/include/bits/types/__FILE.h:
-
-/usr/include/features.h:
-
-/usr/include/bits/endianness.h:
+/usr/include/bits/sigstksz.h:
 
 /usr/include/SDL3/SDL_gamepad.h:
-
-/usr/include/SDL3/SDL_thread.h:
-
-/usr/include/bits/types/__sigset_t.h:
-
-/usr/include/bits/waitstatus.h:
-
-/home/ali/Programming/Projects/GBEmulator/include/gb.h:
-
-/usr/include/bits/timesize.h:
-
-/usr/include/SDL3/SDL_haptic.h:
-
-/usr/include/stdc-predef.h:
-
-/usr/include/gnu/stubs.h:
-
-/usr/include/bits/pthreadtypes-arch.h:
-
-/usr/include/bits/libc-header-start.h:
-
-/usr/include/bits/floatn.h:
-
-/home/ali/Programming/Projects/GBEmulator/src/cpu.c:
-
-/home/ali/Programming/Projects/GBEmulator/src/graphics.c:
-
-/usr/include/bits/atomic_wide_counter.h:
-
-/usr/include/SDL3/SDL_close_code.h:
-
-/usr/include/stdlib.h:
-
-/usr/include/bits/struct_rwlock.h:
-
-/usr/include/SDL3/SDL_touch.h:
-
-/home/ali/Programming/Projects/GBEmulator/include/cpu.h:
-
-/usr/include/SDL2/SDL_timer.h:
-
-/usr/include/bits/types/clockid_t.h:
-
-/usr/include/SDL3/SDL_stdinc.h:
-
-/usr/include/features-time64.h:
-
-/usr/lib/Scrt1.o:
-
-/usr/include/bits/types/timer_t.h:
-
-/usr/include/SDL3/SDL_metal.h:
-
-/usr/include/bits/types/__fpos64_t.h:
-
-/usr/include/bits/select.h:
-
-/home/ali/Programming/Projects/GBEmulator/include/graphics.h:
-
-/usr/include/gnu/stubs-64.h:
-
-/usr/include/bits/struct_mutex.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/crtbeginS.o:
-
-/usr/include/SDL3/SDL_version.h:
-
-/usr/include/alloca.h:
-
-/usr/include/SDL3/SDL_mouse.h:
-
-/usr/include/bits/stdint-least.h:
-
-/usr/include/SDL3/SDL_atomic.h:
-
-/usr/include/SDL3/SDL_hidapi.h:
-
-/usr/include/SDL3/SDL_locale.h:
-
-/home/ali/Programming/Projects/GBEmulator/include/memory.h:
-
-/usr/include/bits/thread-shared-types.h:
-
-CMakeFiles/gbemulator.dir/src/graphics.c.o:
-
-/usr/include/SDL3/SDL_assert.h:
-
-/home/ali/Programming/Projects/GBEmulator/include/cpu_register.h:
-
-/usr/include/SDL3/SDL_bits.h:
-
-/usr/include/bits/byteswap.h:
-
-/usr/include/SDL3/SDL_platform.h:
-
-/usr/include/SDL3/SDL_storage.h:
 
 /usr/include/bits/stdlib-float.h:
 
@@ -744,9 +708,159 @@ CMakeFiles/gbemulator.dir/src/graphics.c.o:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stddef.h:
 
-/usr/include/bits/types.h:
+/usr/include/bits/byteswap.h:
 
-/usr/include/bits/types/FILE.h:
+/usr/include/bits/types/__sigset_t.h:
+
+/usr/include/SDL3/SDL_mouse.h:
+
+/usr/include/bits/stdint-least.h:
+
+/usr/include/SDL3/SDL_atomic.h:
+
+/usr/include/SDL3/SDL_hidapi.h:
+
+/usr/include/SDL3/SDL_locale.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/crtbeginS.o:
+
+/usr/include/SDL3/SDL_version.h:
+
+/usr/include/alloca.h:
+
+/usr/include/bits/sigthread.h:
+
+/usr/include/bits/libc-header-start.h:
+
+/usr/include/bits/siginfo-consts.h:
+
+/usr/include/bits/floatn.h:
+
+/home/ali/Programming/Projects/GBEmulator/src/cpu.c:
+
+/home/ali/Programming/Projects/GBEmulator/src/graphics.c:
+
+/usr/include/bits/atomic_wide_counter.h:
+
+/usr/include/SDL3/SDL_close_code.h:
+
+/usr/include/SDL3/SDL_touch.h:
+
+/home/ali/Programming/Projects/GBEmulator/include/cpu.h:
+
+/usr/include/SDL3/SDL_process.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/bits/struct_rwlock.h:
+
+/home/ali/Programming/Projects/GBEmulator/include/cpu_register.h:
+
+/usr/include/SDL3/SDL_bits.h:
+
+/usr/include/bits/types/__fpos64_t.h:
+
+/usr/include/bits/select.h:
+
+/home/ali/Programming/Projects/GBEmulator/include/graphics.h:
+
+/usr/include/stdc-predef.h:
+
+/usr/include/bits/types/wint_t.h:
+
+/usr/include/bits/sigcontext.h:
+
+/usr/include/SDL3/SDL_iostream.h:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/bits/types/stack_t.h:
+
+/usr/include/bits/sigevent-consts.h:
+
+CMakeFiles/gbemulator.dir/src/cpu.c.o:
+
+/usr/include/bits/types/struct_timespec.h:
+
+CMakeFiles/gbemulator.dir/src/graphics.c.o:
+
+/usr/include/SDL3/SDL_assert.h:
+
+/usr/include/bits/types/sigevent_t.h:
+
+/usr/include/SDL3/SDL_guid.h:
+
+/usr/include/bits/types/__mbstate_t.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/bits/types/struct_timeval.h:
+
+/usr/include/bits/struct_mutex.h:
+
+/usr/include/bits/sigaction.h:
+
+/usr/include/bits/sigstack.h:
+
+/usr/include/bits/pthreadtypes-arch.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/bits/signum-generic.h:
+
+/usr/include/gnu/stubs-64.h:
+
+/usr/include/stdio.h:
+
+/usr/lib/crti.o:
+
+/usr/include/bits/types/sig_atomic_t.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/SDL3/SDL_sensor.h:
+
+/usr/include/bits/uintn-identity.h:
+
+/usr/include/SDL3/SDL_cpuinfo.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/crtendS.o:
+
+/usr/include/SDL3/SDL_camera.h:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/signal_ext.h:
+
+/usr/include/sys/ucontext.h:
+
+/usr/include/bits/timesize.h:
+
+/home/ali/Programming/Projects/GBEmulator/include/gb.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/SDL3/SDL_begin_code.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/features-time64.h:
+
+/usr/lib/Scrt1.o:
+
+/usr/include/bits/types/timer_t.h:
+
+/usr/include/SDL3/SDL_metal.h:
+
+/usr/include/bits/endianness.h:
+
+/usr/include/features.h:
+
+/usr/include/signal.h:
+
+/usr/include/stdint.h:
+
+/usr/include/stdlib.h:
 
 /usr/include/strings.h:
 
@@ -763,6 +877,8 @@ CMakeFiles/gbemulator.dir/src/memory.c.o:
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h:
 
 /usr/include/SDL3/SDL_filesystem.h:
+
+/usr/include/bits/types/sigval_t.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h:
 
@@ -784,14 +900,6 @@ CMakeFiles/gbemulator.dir/src/memory.c.o:
 
 /usr/include/SDL3/SDL_asyncio.h:
 
-/usr/include/SDL3/SDL_rect.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/crtendS.o:
-
-/usr/include/bits/waitflags.h:
-
-/usr/include/SDL3/SDL_camera.h:
-
 /usr/lib/libc.so:
 
 /usr/include/SDL3/SDL_audio.h:
@@ -800,23 +908,13 @@ CMakeFiles/gbemulator.dir/src/memory.c.o:
 
 /usr/include/SDL3/SDL_events.h:
 
-/usr/include/SDL3/SDL_gpu.h:
-
-/usr/include/bits/types/cookie_io_functions_t.h:
-
-/usr/include/SDL3/SDL_properties.h:
+/usr/include/bits/types/__sigval_t.h:
 
 /usr/include/SDL3/SDL_init.h:
 
-/usr/include/SDL3/SDL_pixels.h:
-
-/usr/include/SDL3/SDL_iostream.h:
-
-/usr/include/SDL3/SDL_misc.h:
+/usr/include/SDL3/SDL_surface.h:
 
 /usr/include/bits/stdint-uintn.h:
-
-/usr/include/SDL3/SDL_surface.h:
 
 /usr/include/SDL3/SDL_joystick.h:
 
@@ -826,8 +924,6 @@ CMakeFiles/gbemulator.dir/src/memory.c.o:
 
 /usr/include/SDL3/SDL_keycode.h:
 
-/usr/include/SDL3/SDL_pen.h:
-
 /usr/include/bits/stdint-intn.h:
 
 /usr/include/SDL3/SDL_loadso.h:
@@ -836,24 +932,8 @@ CMakeFiles/gbemulator.dir/src/memory.c.o:
 
 /usr/include/SDL3/SDL_blendmode.h:
 
+/usr/include/bits/ss_flags.h:
+
 /usr/include/SDL3/SDL_log.h:
 
 /usr/include/SDL3/SDL_messagebox.h:
-
-/usr/include/bits/wchar.h:
-
-/usr/include/SDL3/SDL_process.h:
-
-/usr/include/SDL3/SDL_scancode.h:
-
-/usr/include/SDL3/SDL_render.h:
-
-/usr/include/bits/uintn-identity.h:
-
-/usr/include/SDL3/SDL_sensor.h:
-
-/usr/include/SDL3/SDL_hints.h:
-
-/usr/include/SDL3/SDL_system.h:
-
-/usr/include/SDL3/SDL_time.h:

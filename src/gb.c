@@ -14,12 +14,12 @@ gb* gb_create() {
 }
 
 void gb_bios_load(gb* console,const char *path) {
-    _gb_load(console, path, 256, 0x0);
+    _gb_load(console, path, 256, console->memory->bios);
     console->cpu->cpu_register->pc = 0;
 }
 
 void gb_rom_load(gb* console, const char* path) {
-    
+    _gb_load(console, path, 0x8000, console->memory->rom);
 }
 
 void gb_rom_unload();
@@ -29,7 +29,7 @@ void gb_delete(gb** console) {
     *console = NULL;
 }
 
-void _gb_load(gb* console, const char *path, unsigned int length, uint16_t start) {
+void _gb_load(gb* console, const char *path, unsigned int length, uint8_t* start) {
     FILE* file;
     file = fopen(path, "rb");
     if (file == NULL) {
@@ -39,10 +39,11 @@ void _gb_load(gb* console, const char *path, unsigned int length, uint16_t start
     unsigned int i = 0;
     while (1) {
         int byte = fgetc(file);
-        if (byte == -1) {
+        if (byte == EOF) {
             break;
         }
-        gb_memory_write(console->memory, start+i, (uint8_t)byte);
-        i++;
+        *(start) = (uint8_t)byte;
+        start++;
     }
+    fclose(file);
 }

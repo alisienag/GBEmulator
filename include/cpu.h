@@ -38,11 +38,14 @@
 typedef struct {
     gb_cpu_register* cpu_register;
     unsigned int cycles;
+
+    unsigned int _executed_count;
 } gb_cpu;
 
 typedef void (*gb_cpu_op_function_pointer)(gb_cpu*, gb_memory*);
 
 extern gb_cpu_op_function_pointer opcode_function_table[256];
+extern gb_cpu_op_function_pointer opcode_function_table_cb[256];
 
 gb_cpu* gb_cpu_create();
 void gb_cpu_delete(gb_cpu* cpu);
@@ -60,5 +63,6 @@ GB_CPU_OP(gb_cpu_op_ld_sp_u16);
 //0xA
 
 void gb_cpu_init();
+void gb_cpu_init_extended();
 
 #endif // !_H_CPU

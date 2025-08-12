@@ -4,6 +4,7 @@
 #include <SDL2/SDL_timer.h>
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_scancode.h>
+#include <SDL3/SDL_timer.h>
 #include <stdio.h>
 #include <memory.h>
 #include <cpu.h>
@@ -15,7 +16,7 @@ int main() {
     gb_window* window = gb_window_create(400, 200, "hello");
     gb* console = gb_create();
     gb_cpu_register_dump(console->cpu->cpu_register);
-    gb_bios_load(console, "gb_bios.bin");
+    gb_bios_load(console, "dmg_boot.bin");
     
     int _WINDOW_CLOSE = 0;
 
@@ -45,7 +46,6 @@ int main() {
             if (sscanf(line, "%s", cmd) != 1) {
                 continue;
             }
-
             if (strcmp(cmd, "reg_dump") == 0) {
                 gb_cpu_register_dump(console->cpu->cpu_register);
             } else if(strcmp(cmd, "r") == 0 || strcmp(cmd, "run") == 0) {
@@ -72,7 +72,7 @@ int main() {
         gb_cpu_execute(console->cpu, console->memory);
         
 
-        SDL_Delay(17);
+        SDL_DelayNS(1);
     }
     gb_delete(&console);
     gb_window_delete(&window);

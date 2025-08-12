@@ -13,17 +13,27 @@ CMakeFiles/gbemulator.dir/src/cpu.c.o: \
  /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
  /usr/include/bits/stdint-least.h \
  /home/ali/Programming/Projects/GBEmulator/include/memory.h \
+ /usr/include/SDL3/SDL_timer.h /usr/include/SDL3/SDL_stdinc.h \
+ /usr/include/SDL3/SDL_platform_defines.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h \
+ /usr/include/string.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stddef.h \
+ /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
+ /usr/include/strings.h /usr/include/wchar.h /usr/include/bits/floatn.h \
+ /usr/include/bits/floatn-common.h /usr/include/bits/types/wint_t.h \
+ /usr/include/bits/types/mbstate_t.h \
+ /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
+ /usr/include/bits/types/FILE.h /usr/include/inttypes.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdbool.h \
+ /usr/include/SDL3/SDL_begin_code.h /usr/include/SDL3/SDL_close_code.h \
+ /usr/include/SDL3/SDL_error.h \
  /home/ali/Programming/Projects/GBEmulator/include/cpu.h \
  /home/ali/Programming/Projects/GBEmulator/include/memory.h \
- /usr/include/stdio.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stddef.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h \
- /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__mbstate_t.h \
- /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
- /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \
+ /usr/include/stdio.h /usr/include/bits/types/__fpos_t.h \
+ /usr/include/bits/types/__fpos64_t.h \
+ /usr/include/bits/types/struct_FILE.h \
  /usr/include/bits/types/cookie_io_functions_t.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/floatn.h \
- /usr/include/bits/floatn-common.h /usr/include/signal.h \
+ /usr/include/bits/stdio_lim.h /usr/include/signal.h \
  /usr/include/bits/signum-generic.h /usr/include/bits/signum-arch.h \
  /usr/include/bits/types/sig_atomic_t.h \
  /usr/include/bits/types/sigset_t.h /usr/include/bits/types/__sigset_t.h \
@@ -41,13 +51,13 @@ CMakeFiles/gbemulator.dir/src/cpu.c.o: \
  /usr/include/bits/pthreadtypes-arch.h \
  /usr/include/bits/atomic_wide_counter.h /usr/include/bits/struct_mutex.h \
  /usr/include/bits/struct_rwlock.h /usr/include/bits/sigthread.h \
- /usr/include/bits/signal_ext.h /usr/include/stdlib.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/sys/types.h /usr/include/bits/types/clock_t.h \
- /usr/include/bits/types/clockid_t.h /usr/include/bits/types/timer_t.h \
- /usr/include/endian.h /usr/include/bits/byteswap.h \
- /usr/include/bits/uintn-identity.h /usr/include/sys/select.h \
- /usr/include/bits/select.h /usr/include/bits/types/struct_timeval.h \
- /usr/include/alloca.h /usr/include/bits/stdlib-float.h \
- /usr/include/string.h /usr/include/bits/types/locale_t.h \
- /usr/include/bits/types/__locale_t.h /usr/include/strings.h
+ /usr/include/bits/signal_ext.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdatomic.h \
+ /usr/include/stdlib.h /usr/include/bits/waitflags.h \
+ /usr/include/bits/waitstatus.h /usr/include/sys/types.h \
+ /usr/include/bits/types/clock_t.h /usr/include/bits/types/clockid_t.h \
+ /usr/include/bits/types/timer_t.h /usr/include/endian.h \
+ /usr/include/bits/byteswap.h /usr/include/bits/uintn-identity.h \
+ /usr/include/sys/select.h /usr/include/bits/select.h \
+ /usr/include/bits/types/struct_timeval.h /usr/include/alloca.h \
+ /usr/include/bits/stdlib-float.h

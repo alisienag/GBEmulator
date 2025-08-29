@@ -33,6 +33,8 @@ int main() {
                     if (running_status == 0) {
                         running_status = 1;
                     }
+                } else if (event.key.scancode == SDL_SCANCODE_P) {
+                    console->cpu->running = 1;
                 }
             }
         }

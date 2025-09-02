@@ -1,3 +1,0 @@
-/home/ali/Programming/Projects/GBEmulator/build/CMakeFiles/gbemulator.dir
-/home/ali/Programming/Projects/GBEmulator/build/CMakeFiles/edit_cache.dir
-/home/ali/Programming/Projects/GBEmulator/build/CMakeFiles/rebuild_cache.dir

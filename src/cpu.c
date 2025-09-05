@@ -32,6 +32,7 @@ void gb_cpu_execute(gb_cpu* cpu, gb_memory* memory) {
     cpu->cpu_register->pc++;
     printf("%d: ", cpu->_executed_count);
     if(opcode_function_table[opcode] != NULL) {
+        printf("EXECUTING INSTRUCTION: 0x%02X\n", opcode);
         opcode_function_table[opcode](cpu, memory);
     } else {
         printf("EXECUTING UNWRITTEN INSTRUCTION: 0x%02X\n", opcode);
@@ -56,6 +57,20 @@ void gb_cpu_init() {
     opcode_function_table[0x1A] = gb_cpu_op_ld_a_de;
     opcode_function_table[0x1E] = gb_cpu_op_ld_e_d8;
     opcode_function_table[0x22] = gb_cpu_op_ld_hli_a;
+    opcode_function_table[0x26] = gb_cpu_op_ld_h_d8;
+    opcode_function_table[0x2A] = gb_cpu_op_ld_a_hli;
+    opcode_function_table[0x2E] = gb_cpu_op_ld_l_d8;
+    opcode_function_table[0x32] = gb_cpu_op_ld_hld_a;
+    opcode_function_table[0x36] = gb_cpu_op_ld_hl_d8;
+    opcode_function_table[0x3A] = gb_cpu_op_ld_a_hld;
+    opcode_function_table[0x3E] = gb_cpu_op_ld_a_d8;
+
+    for (unsigned int i = 0; i < 15*4; i++) {
+        opcode_function_table[0x40 + i] = gb_cpu_op_ld_r_r;
+    }
+
+    //from misc (NOT YET IMPLEMENTED)
+    //opcode_function_table[0x76] = gb_cpu_op_ld_halt;
     gb_cpu_init_extended_instructions();
 }
 

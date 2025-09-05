@@ -3,7 +3,7 @@
 
 
 #include "memory.h"
-#include <cpu_register.h>
+#include "cpu_register.h"
 #include <stdio.h>
 
 #define GB_CPU_OP(x) void (x)(gb_cpu* cpu, gb_memory* memory)

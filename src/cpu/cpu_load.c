@@ -172,3 +172,38 @@ GB_CPU_OP(gb_cpu_op_ld_r_r) {
         GB_CYCLES(4);
     }
 }
+
+GB_CPU_OP(gb_cpu_op_ldh_a8_a) {
+    uint8_t a8 = GB_READ_8(REG_PC);
+    GB_WRITE_8(0xFF00 + a8, REG_A);
+    REG_PC++;
+    GB_CYCLES(12);
+}
+
+GB_CPU_OP(gb_cpu_op_ld_c_a) {
+    GB_WRITE_8(0xFF00 + REG_C, REG_A);
+    GB_CYCLES(8);
+}
+
+GB_CPU_OP(gb_cpu_op_ld_a16_a) {
+    GB_WRITE_8(GB_READ_16(REG_PC), REG_A);
+    REG_PC+=2;
+    GB_CYCLES(16);
+}
+
+GB_CPU_OP(gb_cpu_op_ldh_a_a8) {
+    REG_A = GB_READ_8(0xFF00 + GB_READ_8(REG_PC));
+    REG_PC++;
+    GB_CYCLES(12);
+}
+
+GB_CPU_OP(gb_cpu_op_ld_a_c) {
+    REG_A = GB_READ_8(0xFF00 + REG_C);
+    GB_CYCLES(8);
+}
+
+GB_CPU_OP(gb_cpu_op_ld_a_a16) {
+    REG_A = GB_READ_8(GB_READ_16(REG_PC));
+    REG_PC+=2;
+    GB_CYCLES(16);
+}

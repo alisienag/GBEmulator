@@ -20,5 +20,11 @@ GB_CPU_OP(gb_cpu_op_ld_hl_d8);
 GB_CPU_OP(gb_cpu_op_ld_a_hld);
 GB_CPU_OP(gb_cpu_op_ld_a_d8);
 GB_CPU_OP(gb_cpu_op_ld_r_r);
+GB_CPU_OP(gb_cpu_op_ldh_a8_a);
+GB_CPU_OP(gb_cpu_op_ld_c_a);
+GB_CPU_OP(gb_cpu_op_ld_a16_a);
+GB_CPU_OP(gb_cpu_op_ldh_a_a8);
+GB_CPU_OP(gb_cpu_op_ld_a_c);
+GB_CPU_OP(gb_cpu_op_ld_a_a16);
 
 #endif

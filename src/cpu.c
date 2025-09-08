@@ -64,10 +64,16 @@ void gb_cpu_init() {
     opcode_function_table[0x36] = gb_cpu_op_ld_hl_d8;
     opcode_function_table[0x3A] = gb_cpu_op_ld_a_hld;
     opcode_function_table[0x3E] = gb_cpu_op_ld_a_d8;
-
-    for (unsigned int i = 0; i < 15*4; i++) {
+    for (unsigned int i = 0; i < 16*4; i++) {
         opcode_function_table[0x40 + i] = gb_cpu_op_ld_r_r;
     }
+    opcode_function_table[0xE0] = gb_cpu_op_ldh_a8_a;
+    opcode_function_table[0xE2] = gb_cpu_op_ld_c_a;
+    opcode_function_table[0xEA] = gb_cpu_op_ld_a16_a;
+    opcode_function_table[0xF0] = gb_cpu_op_ldh_a_a8;
+    opcode_function_table[0xF2] = gb_cpu_op_ld_a_c;
+    opcode_function_table[0xFA] = gb_cpu_op_ld_a_a16;
+
 
     //from misc (NOT YET IMPLEMENTED)
     //opcode_function_table[0x76] = gb_cpu_op_ld_halt;

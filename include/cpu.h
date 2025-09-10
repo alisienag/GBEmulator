@@ -15,6 +15,7 @@
 #define REG_C cpu->cpu_register->c
 #define REG_D cpu->cpu_register->d
 #define REG_E cpu->cpu_register->e
+#define REG_F cpu->cpu_register->f
 #define REG_H cpu->cpu_register->h
 #define REG_L cpu->cpu_register->l
 #define REG_AF cpu->cpu_register->af

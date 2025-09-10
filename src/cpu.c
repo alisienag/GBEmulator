@@ -8,7 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <cpu/cpu_load.h>
+#include "cpu/cpu_load.h"
+#include "cpu/cpu_alu.h"
 
 gb_cpu_op_function_pointer opcode_function_table[256] = {NULL};
 gb_cpu_op_function_pointer opcode_function_table_cb[256] = {NULL};
@@ -74,6 +75,31 @@ void gb_cpu_init() {
     opcode_function_table[0xF2] = gb_cpu_op_ld_a_c;
     opcode_function_table[0xFA] = gb_cpu_op_ld_a_a16;
 
+    //from cpu_alu
+    for (uint8_t i = 0; i < 8; i++) {
+        opcode_function_table[0x80 + i] = gb_cpu_op_add_a_r;
+    }
+    for (uint8_t i = 0; i < 8; i++) {
+        opcode_function_table[0x88 + i] = gb_cpu_op_adc_a_r;
+    }
+    for (uint8_t i = 0; i < 8; i++) { 
+        opcode_function_table[0x90 + i] = gb_cpu_op_sub_a_r;
+    }
+    for (uint8_t i = 0; i < 8; i++) {
+        opcode_function_table[0x98 + i] = gb_cpu_op_sbc_a_r;
+    }
+    for (uint8_t i = 0; i < 8; i++) { 
+        opcode_function_table[0xA0 + i] = gb_cpu_op_and_a_r;
+    }
+    for (uint8_t i = 0; i < 8; i++) {
+        opcode_function_table[0xA8 + i] = gb_cpu_op_xor_a_r;
+    }
+    for (uint8_t i = 0; i < 8; i++) { 
+        opcode_function_table[0xB0 + i] = gb_cpu_op_or_a_r;
+    }
+    for (uint8_t i = 0; i < 8; i++) {
+        opcode_function_table[0xB8 + i] = gb_cpu_op_cp_a_r;
+    }
 
     //from misc (NOT YET IMPLEMENTED)
     //opcode_function_table[0x76] = gb_cpu_op_ld_halt;

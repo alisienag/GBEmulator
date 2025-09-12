@@ -21,6 +21,7 @@ typedef struct {
     };
     uint16_t pc;
     uint16_t sp;
+    uint8_t ime;
 } gb_cpu_register;
 
 gb_cpu_register* gb_cpu_register_create();

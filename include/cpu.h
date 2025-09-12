@@ -35,6 +35,9 @@
 
 #define GB_CYCLES(val) cpu->cycles += val
 
+#define GB_IME_ENABLE() cpu->cpu_register->ime = 2
+#define GB_IME_DISABLE() cpu->cpu_register->ime = 0
+
 //
 
 #define SET_FLAG(flag) (REG_F) |= flag
@@ -45,6 +48,10 @@
 #define FLAG_N 0x40
 #define FLAG_H 0x20
 #define FLAG_C 0x10
+
+#define GB_IME_ENABLED 1
+#define GB_IME_ENABLING 2
+#define GB_IME_DISABLED 0
 
 typedef struct {
     gb_cpu_register* cpu_register;

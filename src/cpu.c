@@ -11,6 +11,7 @@
 #include "cpu/cpu_load.h"
 #include "cpu/cpu_alu.h"
 #include "cpu/cpu_alu_16.h"
+#include "cpu/cpu_misc.h"
 
 gb_cpu_op_function_pointer opcode_function_table[256] = {NULL};
 gb_cpu_op_function_pointer opcode_function_table_cb[256] = {NULL};
@@ -39,6 +40,9 @@ void gb_cpu_execute(gb_cpu* cpu, gb_memory* memory) {
     } else {
         printf("EXECUTING UNWRITTEN INSTRUCTION: 0x%02X\n", opcode);
         SDL_Delay(1000);
+    }
+    if (cpu->cpu_register->ime == GB_IME_ENABLING) {
+        cpu->cpu_register->ime = GB_IME_ENABLED;
     }
     cpu->_executed_count += 1;
 }
@@ -140,6 +144,14 @@ void gb_cpu_init() {
     opcode_function_table[0x2B] = gb_cpu_op_dec_hl;
     opcode_function_table[0x3B] = gb_cpu_op_dec_sp;
     opcode_function_table[0xE8] = gb_cpu_op_add_sp_e8;
+
+    //from cpu_misc
+    opcode_function_table[0x00] = gb_cpu_op_nop;
+    opcode_function_table[0x10] = gb_cpu_op_stop;
+    opcode_function_table[0x76] = gb_cpu_op_halt;
+    opcode_function_table[0xCB] = gb_cpu_op_cb;
+    opcode_function_table[0xF3] = gb_cpu_op_di;
+    opcode_function_table[0xFB] = gb_cpu_op_ei;
 
     //from misc (NOT YET IMPLEMENTED)
     //opcode_function_table[0x76] = gb_cpu_op_ld_halt;

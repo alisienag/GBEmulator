@@ -76,6 +76,22 @@ void gb_cpu_init() {
     opcode_function_table[0xFA] = gb_cpu_op_ld_a_a16;
 
     //from cpu_alu
+    //
+    for (uint8_t i = 0; i < 4; i++) {
+        opcode_function_table[(i << 8) + 0x4] = gb_cpu_op_inc_r;
+    }
+    for (uint8_t i = 0; i < 4; i++) {
+        opcode_function_table[(i << 8) + 0x5] = gb_cpu_op_dec_r;
+    }
+    for (uint8_t i = 0; i < 4; i++) {
+        opcode_function_table[(i << 8) + 0xC] = gb_cpu_op_inc_r;
+    }
+    for (uint8_t i = 0; i < 4; i++) {
+        opcode_function_table[(i << 8) + 0xD] = gb_cpu_op_dec_r;
+    }
+    opcode_function_table[0x2f] = gb_cpu_op_cpl;
+    opcode_function_table[0x3f] = gb_cpu_op_cpl;
+    //
     for (uint8_t i = 0; i < 8; i++) {
         opcode_function_table[0x80 + i] = gb_cpu_op_add_a_r;
     }
@@ -100,6 +116,14 @@ void gb_cpu_init() {
     for (uint8_t i = 0; i < 8; i++) {
         opcode_function_table[0xB8 + i] = gb_cpu_op_cp_a_r;
     }
+    opcode_function_table[0xC6] = gb_cpu_op_add_a_n8;
+    opcode_function_table[0xD6] = gb_cpu_op_sub_a_n8;
+    opcode_function_table[0xE6] = gb_cpu_op_and_a_n8;
+    opcode_function_table[0xF6] = gb_cpu_op_or_a_n8;
+    opcode_function_table[0xCE] = gb_cpu_op_adc_a_n8;
+    opcode_function_table[0xDE] = gb_cpu_op_sbc_a_n8;
+    opcode_function_table[0xEE] = gb_cpu_op_xor_a_n8;
+    opcode_function_table[0xFE] = gb_cpu_op_cp_a_n8;
 
     //from misc (NOT YET IMPLEMENTED)
     //opcode_function_table[0x76] = gb_cpu_op_ld_halt;

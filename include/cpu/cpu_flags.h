@@ -76,6 +76,15 @@
     }\
 } while(0);
 
+#define GB_FLAG_TEST_ADD_H_16(x, y) do {\
+    unsigned int result = ((uint16_t)x & 0xFFF) + ((uint16_t)y & 0xFFF);\
+    if (result > 0xFFF) {\
+        GB_FLAG_SET(GB_FLAG_H);\
+    } else {\
+        GB_FLAG_CLEAR(GB_FLAG_H);\
+    }\
+} while(0);
+
 #define GB_FLAG_TEST_SUB_C_8(x, y) do {\
     int result = (uint8_t)x - (uint8_t)y;\
     if (result < 0) {\

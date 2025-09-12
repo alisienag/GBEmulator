@@ -10,6 +10,7 @@
 
 #include "cpu/cpu_load.h"
 #include "cpu/cpu_alu.h"
+#include "cpu/cpu_alu_16.h"
 
 gb_cpu_op_function_pointer opcode_function_table[256] = {NULL};
 gb_cpu_op_function_pointer opcode_function_table_cb[256] = {NULL};
@@ -124,6 +125,21 @@ void gb_cpu_init() {
     opcode_function_table[0xDE] = gb_cpu_op_sbc_a_n8;
     opcode_function_table[0xEE] = gb_cpu_op_xor_a_n8;
     opcode_function_table[0xFE] = gb_cpu_op_cp_a_n8;
+
+    //from cpu_alu_16
+    opcode_function_table[0x03] = gb_cpu_op_inc_bc;
+    opcode_function_table[0x13] = gb_cpu_op_inc_de;
+    opcode_function_table[0x23] = gb_cpu_op_inc_hl;
+    opcode_function_table[0x33] = gb_cpu_op_inc_sp;
+    opcode_function_table[0x09] = gb_cpu_op_add_hl_bc;
+    opcode_function_table[0x19] = gb_cpu_op_add_hl_de;
+    opcode_function_table[0x29] = gb_cpu_op_add_hl_hl;
+    opcode_function_table[0x39] = gb_cpu_op_add_hl_sp;
+    opcode_function_table[0x0B] = gb_cpu_op_dec_bc;
+    opcode_function_table[0x1B] = gb_cpu_op_dec_de;
+    opcode_function_table[0x2B] = gb_cpu_op_dec_hl;
+    opcode_function_table[0x3B] = gb_cpu_op_dec_sp;
+    opcode_function_table[0xE8] = gb_cpu_op_add_sp_e8;
 
     //from misc (NOT YET IMPLEMENTED)
     //opcode_function_table[0x76] = gb_cpu_op_ld_halt;

@@ -36,6 +36,7 @@
 #define GB_CYCLES(val) cpu->cycles += val
 
 #define GB_IME_ENABLE() cpu->cpu_register->ime = 2
+#define GB_IME_ENABLE_INSTANT() cpu->cpu_register->ime = 1
 #define GB_IME_DISABLE() cpu->cpu_register->ime = 0
 
 //

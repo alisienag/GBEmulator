@@ -17,7 +17,8 @@ int main() {
     gb* console = gb_create();
     gb_cpu_register_dump(console->cpu->cpu_register);
     gb_bios_load(console, "dmg_boot.bin");
-    gb_rom_load(console, "ld_r_r.gb");
+    gb_rom_load(console, "ld_r_r_blarg.gb");
+    //gb_rom_load(console, "cpu_instrs.gb");
     printf("LD_R_R.GB\n");
 
     console->cpu->cpu_register->pc = 0x100; //Just to insta jump to game rom instead of running boot rom.

@@ -12,6 +12,7 @@
 #include "cpu/cpu_load_16.h"
 #include "cpu/cpu_alu.h"
 #include "cpu/cpu_alu_16.h"
+#include "cpu/cpu_control_flow.h"
 #include "cpu/cpu_misc.h"
 
 gb_cpu_op_function_pointer opcode_function_table[256] = {NULL};
@@ -34,9 +35,14 @@ void gb_cpu_execute(gb_cpu* cpu, gb_memory* memory) {
     }
     uint8_t opcode = gb_memory_read(memory, cpu->cpu_register->pc);
     cpu->cpu_register->pc++;
-    printf("%d: ", cpu->_executed_count);
+    //printf("%d: ", cpu->_executed_count);
     if(opcode_function_table[opcode] != NULL) {
         printf("EXECUTING INSTRUCTION: 0x%02X\n", opcode);
+        if (gb_memory_read(memory, 0xFF02) == 0x81) {
+            char c = gb_memory_read(memory, 0xFF01);
+            printf("%c", c);
+            gb_memory_write(memory, 0xFF02, 0x0);
+	    }
         opcode_function_table[opcode](cpu, memory);
     } else {
         printf("EXECUTING UNWRITTEN INSTRUCTION: 0x%02X\n", opcode);
@@ -72,6 +78,7 @@ void gb_cpu_init() {
     opcode_function_table[0x3A] = gb_cpu_op_ld_a_hld;
     opcode_function_table[0x3E] = gb_cpu_op_ld_a_d8;
     for (unsigned int i = 0; i < 16*4; i++) {
+        printf("ld r_r : 0x%04X\n", 0x40 + i);
         opcode_function_table[0x40 + i] = gb_cpu_op_ld_r_r;
     }
     opcode_function_table[0xE0] = gb_cpu_op_ldh_a8_a;
@@ -105,19 +112,19 @@ void gb_cpu_init() {
     //from cpu_alu
     //
     for (uint8_t i = 0; i < 4; i++) {
-        opcode_function_table[(i << 8) + 0x4] = gb_cpu_op_inc_r;
+        opcode_function_table[(i << 3) + 0x4] = gb_cpu_op_inc_r;
     }
     for (uint8_t i = 0; i < 4; i++) {
-        opcode_function_table[(i << 8) + 0x5] = gb_cpu_op_dec_r;
+        opcode_function_table[(i << 3) + 0x5] = gb_cpu_op_dec_r;
     }
     for (uint8_t i = 0; i < 4; i++) {
-        opcode_function_table[(i << 8) + 0xC] = gb_cpu_op_inc_r;
+        opcode_function_table[(i << 3) + 0xC] = gb_cpu_op_inc_r;
     }
     for (uint8_t i = 0; i < 4; i++) {
-        opcode_function_table[(i << 8) + 0xD] = gb_cpu_op_dec_r;
+        opcode_function_table[(i << 3) + 0xD] = gb_cpu_op_dec_r;
     }
     opcode_function_table[0x2f] = gb_cpu_op_cpl;
-    opcode_function_table[0x3f] = gb_cpu_op_cpl;
+    opcode_function_table[0x3f] = gb_cpu_op_ccf;
     //
     for (uint8_t i = 0; i < 8; i++) {
         opcode_function_table[0x80 + i] = gb_cpu_op_add_a_r;
@@ -166,6 +173,38 @@ void gb_cpu_init() {
     opcode_function_table[0x2B] = gb_cpu_op_dec_hl;
     opcode_function_table[0x3B] = gb_cpu_op_dec_sp;
     opcode_function_table[0xE8] = gb_cpu_op_add_sp_e8;
+
+    //from cpu_control_flow
+    opcode_function_table[0x20] = gb_cpu_op_jr_nz_e8;
+    opcode_function_table[0x30] = gb_cpu_op_jr_nc_e8;
+    opcode_function_table[0xC0] = gb_cpu_op_ret_nz;
+    opcode_function_table[0xD0] = gb_cpu_op_ret_nc;
+    opcode_function_table[0xC2] = gb_cpu_op_jp_nz_a16;
+    opcode_function_table[0xD2] = gb_cpu_op_jp_nc_a16;
+    opcode_function_table[0xC3] = gb_cpu_op_jp_a16;
+    opcode_function_table[0xC4] = gb_cpu_op_call_nz_a16;
+    opcode_function_table[0xD4] = gb_cpu_op_call_nc_a16;
+    opcode_function_table[0xC7] = gb_cpu_op_rst_00;   
+    opcode_function_table[0xD7] = gb_cpu_op_rst_10;   
+    opcode_function_table[0xE7] = gb_cpu_op_rst_20;   
+    opcode_function_table[0xF7] = gb_cpu_op_rst_30;   
+    opcode_function_table[0x18] = gb_cpu_op_jr_e8;
+    opcode_function_table[0x28] = gb_cpu_op_jr_z_e8;
+    opcode_function_table[0x38] = gb_cpu_op_jr_c_e8;
+    opcode_function_table[0xC8] = gb_cpu_op_ret_z;
+    opcode_function_table[0xD8] = gb_cpu_op_ret_c;
+    opcode_function_table[0xC9] = gb_cpu_op_ret;
+    opcode_function_table[0xD9] = gb_cpu_op_reti;
+    opcode_function_table[0xE9] = gb_cpu_op_jp_hl;
+    opcode_function_table[0xCA] = gb_cpu_op_jp_z_a16;
+    opcode_function_table[0xDA] = gb_cpu_op_jp_c_a16;
+    opcode_function_table[0xCC] = gb_cpu_op_call_z_a16;
+    opcode_function_table[0xDC] = gb_cpu_op_call_c_a16;
+    opcode_function_table[0xCD] = gb_cpu_op_call_a16;
+    opcode_function_table[0xCF] = gb_cpu_op_rst_08;   
+    opcode_function_table[0xDF] = gb_cpu_op_rst_18;   
+    opcode_function_table[0xEF] = gb_cpu_op_rst_28;   
+    opcode_function_table[0xFF] = gb_cpu_op_rst_38;   
 
     //from cpu_misc
     opcode_function_table[0x00] = gb_cpu_op_nop;

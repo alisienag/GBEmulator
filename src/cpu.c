@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "cpu/cpu_load.h"
+#include "cpu/cpu_load_16.h"
 #include "cpu/cpu_alu.h"
 #include "cpu/cpu_alu_16.h"
 #include "cpu/cpu_misc.h"
@@ -79,6 +80,27 @@ void gb_cpu_init() {
     opcode_function_table[0xF0] = gb_cpu_op_ldh_a_a8;
     opcode_function_table[0xF2] = gb_cpu_op_ld_a_c;
     opcode_function_table[0xFA] = gb_cpu_op_ld_a_a16;
+
+    //from cpu_load_16
+    
+    opcode_function_table[0x01] = gb_cpu_op_ld_bc_n16;
+    opcode_function_table[0x11] = gb_cpu_op_ld_de_n16;
+    opcode_function_table[0x21] = gb_cpu_op_ld_hl_n16;
+    opcode_function_table[0x31] = gb_cpu_op_ld_sp_n16;
+
+    opcode_function_table[0xC1] = gb_cpu_op_pop_bc;
+    opcode_function_table[0xD1] = gb_cpu_op_pop_de;
+    opcode_function_table[0xE1] = gb_cpu_op_pop_hl;
+    opcode_function_table[0xF1] = gb_cpu_op_pop_af;
+
+    opcode_function_table[0xC5] = gb_cpu_op_push_bc;
+    opcode_function_table[0xD5] = gb_cpu_op_push_de;
+    opcode_function_table[0xE5] = gb_cpu_op_push_hl;
+    opcode_function_table[0xF5] = gb_cpu_op_push_af;
+
+    opcode_function_table[0x08] = gb_cpu_op_ld_a16_sp;
+    opcode_function_table[0xF8] = gb_cpu_op_ld_hl_sp_e8;
+    opcode_function_table[0xF9] = gb_cpu_op_ld_sp_hl;
 
     //from cpu_alu
     //

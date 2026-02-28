@@ -1,3 +1,4 @@
+#include "cpu/cpu_cb.h"
 #include "cpu_register.h"
 #include "memory.h"
 #include <SDL3/SDL_timer.h>
@@ -213,6 +214,8 @@ void gb_cpu_init() {
     opcode_function_table[0xCB] = gb_cpu_op_cb;
     opcode_function_table[0xF3] = gb_cpu_op_di;
     opcode_function_table[0xFB] = gb_cpu_op_ei;
+    opcode_function_table[0x27] = gb_cpu_op_daa;
+    opcode_function_table[0x37] = gb_cpu_op_scf;
 
     //from misc (NOT YET IMPLEMENTED)
     //opcode_function_table[0x76] = gb_cpu_op_ld_halt;
@@ -222,6 +225,12 @@ void gb_cpu_init() {
 void gb_cpu_init_extended_instructions() {
     for (unsigned i = 0; i < 256; i++) {
         opcode_function_table_cb[i] = NULL;
+    }
+    for (uint8_t i = 0; i < 8; i++) {
+        opcode_function_table_cb[0x00 + i] = gb_cpu_cb_rlc;
+    }
+    for (uint8_t i = 0; i < 8; i++) {
+        opcode_function_table_cb[0x08 + i] = gb_cpu_cb_rrc;
     }
 }
 

@@ -25,6 +25,15 @@
 #define REG_SP cpu->cpu_register->sp
 #define REG_PC cpu->cpu_register->pc
 
+#define GB_OPCODE_DECODE_REG_A 0b00000111
+#define GB_OPCODE_DECODE_REG_B 0b00000000
+#define GB_OPCODE_DECODE_REG_C 0b00000001
+#define GB_OPCODE_DECODE_REG_D 0b00000010
+#define GB_OPCODE_DECODE_REG_E 0b00000011
+#define GB_OPCODE_DECODE_REG_H 0b00000100
+#define GB_OPCODE_DECODE_REG_L 0b00000101
+#define GB_OPCODE_DECODE_REG_HL 0b00000110
+
 #define GB_WRITE_8(loc, value) gb_memory_write(memory, loc, value)
 #define GB_READ_8(loc) gb_memory_read(memory, loc)
 #define GB_WRITE_16(loc, value) do {\

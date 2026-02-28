@@ -4,7 +4,7 @@
 #include "../cpu.h"
 #include "../cpu/cpu_flags.h"
 
-static inline uint8_t GB_CPU_ALU_WHICH_REG(uint8_t x);
+uint8_t GB_CPU_ALU_WHICH_REG(uint8_t x);
 
 GB_CPU_OP(gb_cpu_op_inc_r);
 GB_CPU_OP(gb_cpu_op_dec_r);

@@ -2,19 +2,10 @@
 #include "cpu.h"
 #include "cpu/cpu_flags.h"
 
-#define GB_OPCODE_DECODE_REG_A 0b00000111
-#define GB_OPCODE_DECODE_REG_B 0b00000000
-#define GB_OPCODE_DECODE_REG_C 0b00000001
-#define GB_OPCODE_DECODE_REG_D 0b00000010
-#define GB_OPCODE_DECODE_REG_E 0b00000011
-#define GB_OPCODE_DECODE_REG_H 0b00000100
-#define GB_OPCODE_DECODE_REG_L 0b00000101
-#define GB_OPCODE_DECODE_REG_HL 0b00000110
-
 GB_CPU_OP(gb_cpu_op_inc_r) {
     uint8_t opcode = GB_READ_8(REG_PC-1);
     uint8_t* reg_ptr = NULL;
-    switch ((opcode & 0xF0) >> 8) {
+    switch ((opcode & 0xF0) >> 4) {
         case 0x0: {
             if ((opcode & 0xF) == 0x4) {
                 reg_ptr = &REG_B;
@@ -65,7 +56,7 @@ GB_CPU_OP(gb_cpu_op_inc_r) {
 GB_CPU_OP(gb_cpu_op_dec_r) {
     uint8_t opcode = GB_READ_8(REG_PC-1);
     uint8_t* reg_ptr = NULL;
-    switch ((opcode & 0xF0) >> 8) {
+    switch ((opcode & 0xF0) >> 4) {
         case 0x0: {
             if ((opcode & 0xF) == 0x4) {
                 reg_ptr = &REG_B;
@@ -275,12 +266,12 @@ GB_CPU_OP(gb_cpu_op_sub_a_r) {
         }
     }
 
-    GB_FLAG_TEST_Z(augend + addend);
+    GB_FLAG_TEST_Z(augend - addend);
     GB_FLAG_SET(FLAG_N);
     GB_FLAG_TEST_SUB_H_8(augend, addend);
     GB_FLAG_TEST_SUB_C_8(augend, addend);
 
-    REG_A = (uint8_t)(augend + addend);
+    REG_A = (uint8_t)(augend - addend);
 
     GB_CYCLES(4);
 }
@@ -649,7 +640,7 @@ GB_CPU_OP(gb_cpu_op_cp_a_n8) {
     GB_CYCLES(8);
 }
 
-static inline uint8_t GB_CPU_ALU_WHICH_REG(uint8_t x) {
+uint8_t GB_CPU_ALU_WHICH_REG(uint8_t x) {
     x = x & 0b00000111;   
     switch (x) {
         case GB_OPCODE_DECODE_REG_A:

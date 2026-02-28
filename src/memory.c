@@ -18,6 +18,7 @@ void gb_memory_delete(gb_memory* memory) {
 
 void gb_memory_write(gb_memory* mem, uint16_t addr, uint8_t value) {
     if (addr < 0x8000) {
+        printf("Writing to rom WHAT THE FUCK!\n");
         return;
     }
     else if (addr < 0xA000) mem->vram[addr - 0x8000] = value;
@@ -29,6 +30,8 @@ void gb_memory_write(gb_memory* mem, uint16_t addr, uint8_t value) {
     else if (addr < 0xFF80) {
         if (addr == 0xFF50 && value == 1) {
             mem->bios_enabled  = 0;
+            printf("EXIT BIOS");
+            exit(5);
         }
         mem->io[addr - 0xFF00] = value;
     }

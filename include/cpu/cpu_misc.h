@@ -12,4 +12,9 @@ GB_CPU_OP(gb_cpu_op_di);
 GB_CPU_OP(gb_cpu_op_ei);
 GB_CPU_OP(gb_cpu_op_daa);
 GB_CPU_OP(gb_cpu_op_scf);
+// NON CB Bit Operations
+GB_CPU_OP(gb_cpu_op_rlca);
+GB_CPU_OP(gb_cpu_op_rla);
+GB_CPU_OP(gb_cpu_op_rrca);
+GB_CPU_OP(gb_cpu_op_rra);
 #endif

@@ -34,16 +34,14 @@ void _gb_load(gb* console, const char *path, unsigned int length, uint8_t* start
     file = fopen(path, "rb");
     if (file == NULL) {
         printf("ERROR::GB::_GB_LOAD::FILE_NULL\n");
+        exit(1);
         return;
     }
     unsigned int i = 0;
-    while (1) {
+    for (int i = 0; i < length; i++) {
         int byte = fgetc(file);
-        if (byte == EOF) {
-            break;
-        }
-        *(start) = (uint8_t)byte;
-        start++;
+        if (byte == EOF) break;
+        start[i] = (uint8_t)byte;
     }
     fclose(file);
 }

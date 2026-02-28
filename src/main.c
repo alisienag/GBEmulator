@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <memory.h>
 #include <cpu.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 
@@ -16,15 +17,12 @@ int main() {
     gb_window* window = gb_window_create(160, 144, "hello");
     gb* console = gb_create();
     gb_cpu_register_dump(console->cpu->cpu_register);
-    gb_bios_load(console, "dmg_boot.bin");
-    //gb_rom_load(console, "cpu_instrs.gb");
-
-
-    
+    gb_bios_load(console, "dmg_bin.bin");
     int _WINDOW_CLOSE = 0;
 
     int running_status = 1;
     char cmd[16];
+    int counter = 0;
     while (_WINDOW_CLOSE == 0) {
         SDL_Event event;
         while(SDL_PollEvent(&event)) {
@@ -41,41 +39,56 @@ int main() {
                 }
             }
         }
-
-        while (running_status == 1) {
-            char line[64];
-            printf("Waiting for instruction...\n>");
-            if (fgets(line, sizeof(line), stdin) == NULL) {
-                break;
-            }
-            if (sscanf(line, "%s", cmd) != 1) {
-                continue;
-            }
-            if (strcmp(cmd, "reg_dump") == 0) {
-                gb_cpu_register_dump(console->cpu->cpu_register);
-            } else if(strcmp(cmd, "r") == 0 || strcmp(cmd, "run") == 0) {
-                running_status = 0;
-            } else if(strcmp(cmd, "q") == 0 || strcmp(cmd, "exit") == 0 || strcmp(cmd, "quit") == 0) {
-                return 0;
-            } else if (strcmp(cmd, "c") == 0 || strcmp(cmd, "continue") == 0) {
-                break;
-            } else if (strcmp(cmd, "mem_dump") == 0) {
-                printf("Memdump: Enter Start Adress and count\n");
-                uint16_t start_address = 0;
-                unsigned int count = 0;
-                if (fgets(line, sizeof(line), stdin) == NULL)
-                    continue;
-                if (sscanf(line, "0x%04X %d", &start_address, &count) != 2) {
-                    printf("Memdump: Usage [0xXXXX] [X] where X is any hexadecimal character!");
+        if (counter < 0) {
+            while (running_status == 1) {
+                char line[64];
+                printf("Waiting for instruction...\n>");
+                if (fgets(line, sizeof(line), stdin) == NULL) {
+                    break;
+                }
+                if (sscanf(line, "%s", cmd) != 1) {
                     continue;
                 }
-                printf("Memdump: Started...\n");
-                gb_memory_dump(console->memory, start_address, count);
-                printf("Memdump: Ended...\n");
+                if (strcmp(cmd, "reg_dump") == 0) {
+                    gb_cpu_register_dump(console->cpu->cpu_register);
+                } else if(strcmp(cmd, "r") == 0 || strcmp(cmd, "run") == 0) {
+                    running_status = 0;
+                } else if(strcmp(cmd, "q") == 0 || strcmp(cmd, "exit") == 0 || strcmp(cmd, "quit") == 0) {
+                    return 0;
+                } else if (strcmp(cmd, "c") == 0 || strcmp(cmd, "continue") == 0) {
+                    break;
+                } else if (strcmp(cmd, "mem_dump") == 0) {
+                    printf("Memdump: Enter Start Adress and count\n");
+                    uint16_t start_address = 0;
+                    unsigned int count = 0;
+                    if (fgets(line, sizeof(line), stdin) == NULL)
+                        continue;
+                    if (sscanf(line, "0x%04X %d", &start_address, &count) != 2) {
+                        printf("Memdump: Usage [0xXXXX] [X] where X is any hexadecimal character!");
+                        continue;
+                    }
+                    printf("Memdump: Started...\n");
+                    gb_memory_dump(console->memory, start_address, count);
+                    printf("Memdump: Ended...\n");
+                } else if (strcmp(cmd, "execute_num") == 0) {
+                    printf("Execute: Type number of iters you wanna execute!\n");
+                    if (fgets(line, sizeof(line), stdin) == NULL)
+                        continue;
+                    if (sscanf(line, "%d", &counter) != 1) {
+                        printf("Execute Num: Usage [X] where X is any whole number!");
+                        continue;
+                    }
+                }
             }
+        } else {
+            counter--;
+        }
+        if (console->memory->bios_enabled == 0) {
+            exit(0);            
         }
         gb_cpu_execute(console->cpu, console->memory);
-        SDL_DelayNS(1);
+        gb_cpu_register_dump(console->cpu->cpu_register);
+        //gb_memory_dump(console->memory, 0xFF50, 4);
     }
     gb_delete(&console);
     gb_window_delete(&window);

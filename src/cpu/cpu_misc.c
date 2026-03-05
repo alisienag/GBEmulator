@@ -10,6 +10,7 @@ GB_CPU_OP(gb_cpu_op_stop) {
     GB_CYCLES(4);
 }
 GB_CPU_OP(gb_cpu_op_halt) {
+    cpu->running = GB_CPU_HALTED;
     GB_CYCLES(4);
 }
 GB_CPU_OP(gb_cpu_op_cb) {

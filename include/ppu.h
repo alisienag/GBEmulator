@@ -3,7 +3,13 @@
 
 #include "memory.h"
 
-#define GB_PPU_SCANLINE_DUR 114 //456 / 4 = 114
+#define GB_PPU_SCANLINE_DUR 456 //456 / 4 = 114
+
+#define GB_IF 0xFF0F
+#define GB_IE 0xFFFF
+
+#define GB_INTERRUPT_VBLANK_BIT 0x1
+#define GB_INTERRUPT_STAT_BIT 0x2
 
 #define GB_PPU_LCDC 0xFF40
 #define GB_PPU_STAT 0xFF41

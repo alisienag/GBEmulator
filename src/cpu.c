@@ -28,55 +28,95 @@ gb_cpu* gb_cpu_create() {
     cpu->cycles = 0;
     cpu->_executed_count = 0;
     cpu->running = 1;
+    cpu->cpu_register->ime = 0;
     return cpu;
 }
 
 void gb_cpu_execute(gb_cpu* cpu, gb_ppu* ppu, gb_memory* memory) {
-    if (cpu->running == 0) {
+    if (cpu->running == GB_CPU_STOPPED) {
         return;
     }
     //INTERRUPT HANDLING!
-    if (cpu->cpu_register->ime) {
-        if (gb_memory_read(memory, 0xFFFF) & gb_memory_read(memory, 0xFF0F) & 1) {
+    if (cpu->cpu_register->ime == GB_IME_ENABLED) {
+        if (gb_memory_read(memory, GB_IE) & gb_memory_read(memory, GB_IF) & 1) {
+            cpu->running = GB_CPU_RUNNING;
             //VBLANK INTERRUPT REQUSTED AND CAN RUN!
             GB_IME_DISABLE();
-            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
-            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
-            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
-            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
-            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
-            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
-            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
-            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
-            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
-            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
-            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
-            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
             printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
             cpu->cpu_register->sp -= 2;
             gb_memory_write(memory, cpu->cpu_register->sp + 1, (cpu->cpu_register->pc >> 8) & 0xFF);
             gb_memory_write(memory, cpu->cpu_register->sp, cpu->cpu_register->pc & 0xFF);
             cpu->cpu_register->pc = 0x40;
-            gb_memory_write(memory, 0xFF0F, gb_memory_read(memory, 0xFF0F) & ~0x01); //Clear VBLANK Interrupt
             exit(1);
+        } else if (gb_memory_read(memory, GB_IE) & gb_memory_read(memory, GB_IF) & 0x2) {
+            cpu->running = GB_CPU_RUNNING;
+            GB_IME_DISABLE();
+            printf("STAT INTERRUPT CALLED!!!!!!!!\n");
+            cpu->cpu_register->sp -= 2;
+            gb_memory_write(memory, cpu->cpu_register->sp + 1, (cpu->cpu_register->pc >> 8) & 0xFF);
+            gb_memory_write(memory, cpu->cpu_register->sp, cpu->cpu_register->pc & 0xFF);
+            cpu->cpu_register->pc = 0x48;
+        } else if (gb_memory_read(memory, GB_IE) & gb_memory_read(memory, GB_IF) & 0x4) {
+            cpu->running = GB_CPU_RUNNING;
+            GB_IME_DISABLE();
+            printf("TIMER INTERRUPT CALLED!!!!!!!!\n");
+            cpu->cpu_register->sp -= 2;
+            gb_memory_write(memory, cpu->cpu_register->sp + 1, (cpu->cpu_register->pc >> 8) & 0xFF);
+            gb_memory_write(memory, cpu->cpu_register->sp, cpu->cpu_register->pc & 0xFF);
+            cpu->cpu_register->pc = 0x50;
         }
-    }
-
-    uint8_t opcode = gb_memory_read(memory, cpu->cpu_register->pc);
-    cpu->cpu_register->pc++;
-    //printf("%d: ", cpu->_executed_count);
-    if(opcode_function_table[opcode] != NULL) {
-        //printf("EXECUTING INSTRUCTION: 0x%02X\n", opcode);
-        opcode_function_table[opcode](cpu, memory);
-        gb_ppu_step(ppu, memory, cpu->cycles);
-        cpu->cycles = 0;
-    } else {
-        printf("EXECUTING UNWRITTEN INSTRUCTION: 0x%02X\n", opcode);
-        SDL_Delay(1000);
     }
     if (cpu->cpu_register->ime == GB_IME_ENABLING) {
         cpu->cpu_register->ime = GB_IME_ENABLED;
     }
+    //Instruction Handling
+    if (cpu->running == GB_CPU_RUNNING) {
+        uint8_t opcode = gb_memory_read(memory, cpu->cpu_register->pc);
+        cpu->cpu_register->pc++;
+        if(opcode_function_table[opcode] != NULL) {
+            opcode_function_table[opcode](cpu, memory);
+            gb_ppu_step(ppu, memory, cpu->cycles);
+            cpu->total_cycles += cpu->cycles;
+            cpu->timer += cpu->cycles;
+            cpu->div_timer += cpu->cycles;
+            cpu->cycles = 0;
+        }
+    } else {
+        gb_ppu_step(ppu, memory, 4);
+        cpu->total_cycles += 4;
+        cpu->timer += 4;
+        cpu->div_timer += 4;
+        cpu->cycles = 0;
+    }
+
+    while (cpu->div_timer >= 256) {
+        cpu->div_timer -= 256;
+        memory->io[GB_TIMER_DIV - 0xFF00] = (memory->io[GB_TIMER_DIV - 0xFF00] + 1) & 0xFF;
+    }
+
+    //Timer Handling
+    if (gb_memory_read(memory, GB_TIMER_TAC) & 0x40) { //If Timer Enabled
+        uint8_t clock_select = gb_memory_read(memory, GB_TIMER_TAC) & 0x3;
+        uint16_t period = 0;
+        switch(clock_select) {
+            case 0: period = 256 * 4; break;
+            case 1: period = 4 * 4; break;
+            case 2: period = 16 * 4; break;
+            case 3: period = 64 * 4; break;
+        }
+        while (cpu->timer >= period) {
+            cpu->timer -= period;
+            uint8_t tima = gb_memory_read(memory, GB_TIMER_TIMA);
+            if (tima == 0xFF) {
+                tima = gb_memory_read(memory, GB_TIMER_TMA);
+                gb_memory_write(memory, GB_IF, gb_memory_read(memory, GB_IF) | 0x4);
+            } else {
+                tima += 1;
+            }
+            gb_memory_write(memory, GB_TIMER_TIMA, tima);
+        }
+    }
+
     cpu->_executed_count += 1;
 }
 

@@ -64,9 +64,21 @@
 #define GB_IME_ENABLING 2
 #define GB_IME_DISABLED 0
 
+#define GB_TIMER_DIV 0xFF04
+#define GB_TIMER_TIMA 0xFF05
+#define GB_TIMER_TMA 0xFF06
+#define GB_TIMER_TAC 0xFF07
+
+#define GB_CPU_STOPPED 0
+#define GB_CPU_RUNNING 1
+#define GB_CPU_HALTED 2
+
 typedef struct {
     gb_cpu_register* cpu_register;
     unsigned int cycles;
+    unsigned int total_cycles;
+    unsigned int timer;
+    unsigned int div_timer;
     int running;
     unsigned int _executed_count;
 } gb_cpu;

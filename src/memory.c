@@ -23,6 +23,10 @@ void gb_memory_write(gb_memory* mem, uint16_t addr, uint8_t value) {
         printf("%c", c);
     }
 
+    if (addr == 0xFF04) {
+        value = 0;
+    }
+
     if (addr < 0x8000) {
         printf("Writing to rom WHAT THE FUCK!\n");
         return;

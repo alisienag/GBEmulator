@@ -12,13 +12,17 @@
 #include <string.h>
 #include <sys/types.h>
 
-int main() {
+int main(int argc, char** argv) {
   gb_window_init();
   gb_window *window = gb_window_create(160, 144, "hello");
   gb *console = gb_create();
   gb_cpu_register_dump(console->cpu->cpu_register);
-  gb_bios_load(console, "dmg_boot.bin");
-  gb_rom_load(console, "ld_r_r_blarg.gb");
+  gb_bios_load(console, "../roms/dmg_boot.bin");
+  if (argc > 1) {
+    gb_rom_load(console, argv[1]);
+  } else {
+      gb_rom_load(console, "../roms/cpu_instrs.gb");
+  }
   int _WINDOW_CLOSE = 0;
   int running_status = 1;
   char cmd[16];

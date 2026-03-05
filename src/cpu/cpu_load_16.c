@@ -62,10 +62,6 @@ GB_CPU_OP(gb_cpu_op_pop_af) {
     uint16_t value = GB_READ_16(REG_SP);
     REG_SP += 2;
 
-    if ((value & 0xF) != 0) {
-        printf("Wow, garbage bit found during pop af\n");
-    }
-
     REG_AF = value & 0xFFF0;
     GB_CYCLES(12);
 }

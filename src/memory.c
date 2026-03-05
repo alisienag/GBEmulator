@@ -1,4 +1,5 @@
 #include <memory.h>
+#include <stdatomic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,21 +18,26 @@ void gb_memory_delete(gb_memory* memory) {
 
 
 void gb_memory_write(gb_memory* mem, uint16_t addr, uint8_t value) {
+    if (addr == 0xFF02 && value == 0x81) {
+        uint8_t c = gb_memory_read(mem, 0xFF01);
+        printf("%c", c);
+    }
+
     if (addr < 0x8000) {
         printf("Writing to rom WHAT THE FUCK!\n");
         return;
     }
     else if (addr < 0xA000) mem->vram[addr - 0x8000] = value;
     else if (addr < 0xC000) mem->eram[addr - 0xA000] = value;
-    else if (addr < 0xE000) mem->wram[addr - 0xC000] = value;
+    else if (addr < 0xE000) {
+        mem->wram[addr - 0xC000] = value;
+    }
     else if (addr < 0xFE00) return; // Echo RAM or unusable
     else if (addr < 0xFEA0) mem->oam[addr - 0xFE00] = value;
     else if (addr < 0xFF00) return; // Unusable memory
     else if (addr < 0xFF80) {
         if (addr == 0xFF50 && value == 1) {
             mem->bios_enabled  = 0;
-            printf("EXIT BIOS");
-            exit(5);
         }
         mem->io[addr - 0xFF00] = value;
     }

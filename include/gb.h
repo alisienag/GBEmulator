@@ -3,10 +3,12 @@
 
 #include "cpu.h"
 #include "memory.h"
+#include "ppu.h"
 typedef struct {
     const int rom_loaded;
     gb_cpu* cpu;
     gb_memory* memory;
+    gb_ppu* ppu;
 } gb;
 
 gb* gb_create();

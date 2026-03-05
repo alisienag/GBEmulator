@@ -6,6 +6,35 @@
 
 uint8_t GB_CPU_ALU_WHICH_REG(uint8_t x);
 
+#define GB_OPCODE_DECODE_PTR(opcode, x) do {\
+    switch(GB_CPU_ALU_WHICH_REG(opcode)) {\
+        case GB_OPCODE_DECODE_REG_A:\
+            x = &REG_A;\
+            break;\
+        case GB_OPCODE_DECODE_REG_B:\
+            x = &REG_B;\
+            break;\
+        case GB_OPCODE_DECODE_REG_C:\
+            x = &REG_C;\
+            break;\
+        case GB_OPCODE_DECODE_REG_D:\
+            x = &REG_D;\
+            break;\
+        case GB_OPCODE_DECODE_REG_E:\
+            x = &REG_E;\
+            break;\
+        case GB_OPCODE_DECODE_REG_H:\
+            x = &REG_H;\
+            break;\
+        case GB_OPCODE_DECODE_REG_L:\
+            x = &REG_L;\
+            break;\
+        case GB_OPCODE_DECODE_REG_HL:\
+            x = NULL;\
+            break;\
+    }\
+    } while (0)
+
 GB_CPU_OP(gb_cpu_op_inc_r);
 GB_CPU_OP(gb_cpu_op_dec_r);
 

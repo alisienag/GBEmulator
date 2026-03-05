@@ -10,7 +10,7 @@ typedef struct {
     uint8_t wram[0x2000];     // 8KB Work RAM
     uint8_t oam[0xA0];        // Sprite Attribute Table
     uint8_t io[0x80];         // I/O Registers
-    uint8_t hram[0x7F];       // High RAM (stack & fast access)
+    uint8_t hram[0x7F];       // High RAM (stack & fast acgess)
     uint8_t interrupt_enable; // 1 byte at 0xFFFF
     uint8_t bios_enabled;
 } gb_memory;

@@ -1,5 +1,6 @@
 #include "cpu.h"
 #include "memory.h"
+#include "ppu.h"
 #include <gb.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +11,7 @@ gb* gb_create() {
     memset(console, 0, sizeof(gb));
     console->cpu = gb_cpu_create();
     console->memory = gb_memory_create();
+    console->ppu = gb_ppu_create();
     return console;
 }
 

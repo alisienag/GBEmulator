@@ -14,7 +14,7 @@
 #define GB_FLAG_BIT(x) (((REG_F & x) != 0) ? 1 : 0)
 
 #define GB_FLAG_TEST_Z(x) do {\
-    if (x == 0) {\
+    if ((uint8_t)(x) == 0) {\
         GB_FLAG_SET(GB_FLAG_Z);\
     } else {\
         GB_FLAG_CLEAR(GB_FLAG_Z);\

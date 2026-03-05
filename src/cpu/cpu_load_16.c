@@ -93,7 +93,7 @@ GB_CPU_OP(gb_cpu_op_push_hl) {
 
 GB_CPU_OP(gb_cpu_op_push_af) {
     REG_SP -= 2;
-    GB_WRITE_16(REG_SP, REG_AF & 0xFF0);
+    GB_WRITE_16(REG_SP, REG_AF & 0xFFF0);
 
     GB_CYCLES(16);
 }
@@ -106,7 +106,7 @@ GB_CPU_OP(gb_cpu_op_ld_a16_sp) {
 }
 
 GB_CPU_OP(gb_cpu_op_ld_hl_sp_e8) {
-    uint8_t e8 = GB_READ_8(REG_PC);
+    int8_t e8 = (int8_t)GB_READ_8(REG_PC);
     REG_PC++;
 
     GB_FLAG_CLEAR(FLAG_Z);

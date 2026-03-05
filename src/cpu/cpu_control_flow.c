@@ -1,6 +1,7 @@
 #include "cpu/cpu_control_flow.h"
 #include "cpu.h"
 #include "cpu/cpu_flags.h"
+#include <stdlib.h>
 
 GB_CPU_OP(gb_cpu_op_jr_nz_e8) {
     if (GB_FLAG_BIT(FLAG_Z) == 0) {
@@ -141,7 +142,7 @@ GB_CPU_OP(gb_cpu_op_jr_z_e8) {
     }
 }
 GB_CPU_OP(gb_cpu_op_jr_c_e8) {
-    if (GB_FLAG_BIT(FLAG_Z) == 1) {
+    if (GB_FLAG_BIT(FLAG_C) == 1) {
         int8_t offset = GB_READ_8(REG_PC);
         REG_PC += offset + 1;
         GB_CYCLES(12);
@@ -217,6 +218,7 @@ GB_CPU_OP(gb_cpu_op_jp_c_a16) {
 GB_CPU_OP(gb_cpu_op_call_z_a16) {
     if (GB_FLAG_BIT(FLAG_Z) == 1) {
         uint16_t address = GB_READ_16(REG_PC);
+        REG_PC += 2;
         REG_SP -= 2;
         GB_WRITE_16(REG_SP, REG_PC);
         REG_PC = address;
@@ -229,6 +231,7 @@ GB_CPU_OP(gb_cpu_op_call_z_a16) {
 GB_CPU_OP(gb_cpu_op_call_c_a16) {
     if (GB_FLAG_BIT(FLAG_C) == 1) {
         uint16_t address = GB_READ_16(REG_PC);
+        REG_PC += 2;
         REG_SP -= 2;
         GB_WRITE_16(REG_SP, REG_PC);
         REG_PC = address;
@@ -240,6 +243,7 @@ GB_CPU_OP(gb_cpu_op_call_c_a16) {
 }
 GB_CPU_OP(gb_cpu_op_call_a16) {
     uint16_t address = GB_READ_16(REG_PC);
+    REG_PC += 2;
     REG_SP -= 2;
     GB_WRITE_16(REG_SP, REG_PC);
     REG_PC = address;

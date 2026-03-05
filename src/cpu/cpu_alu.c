@@ -1,42 +1,12 @@
 #include "../include/cpu/cpu_alu.h"
 #include "cpu.h"
 #include "cpu/cpu_flags.h"
+#include <stdlib.h>
 
 GB_CPU_OP(gb_cpu_op_inc_r) {
     uint8_t opcode = GB_READ_8(REG_PC-1);
     uint8_t* reg_ptr = NULL;
-    switch ((opcode & 0xF0) >> 4) {
-        case 0x0: {
-            if ((opcode & 0xF) == 0x4) {
-                reg_ptr = &REG_B;
-            } else {
-                reg_ptr = &REG_C;
-            }
-            break;
-        }
-        case 0x1: {
-            if ((opcode & 0xF) == 0x4) {
-                reg_ptr = &REG_D;
-            } else {
-                reg_ptr = &REG_E;
-            }
-            break;
-        }
-        case 0x2: {
-            if ((opcode & 0xF) == 0x4) {
-                reg_ptr = &REG_H;
-            } else {
-                reg_ptr = &REG_L;
-            }
-            break;
-        }
-        case 0x3: {
-            if ((opcode & 0xC) == 0x4) {
-                reg_ptr = &REG_A;
-            }
-            break;
-        }
-    }
+    GB_OPCODE_DECODE_PTR(opcode>>3, reg_ptr);
     if (reg_ptr == NULL) {
         uint8_t value_hl = GB_READ_8(REG_HL);
         GB_FLAG_TEST_Z(value_hl + 1);
@@ -56,51 +26,20 @@ GB_CPU_OP(gb_cpu_op_inc_r) {
 GB_CPU_OP(gb_cpu_op_dec_r) {
     uint8_t opcode = GB_READ_8(REG_PC-1);
     uint8_t* reg_ptr = NULL;
-    switch ((opcode & 0xF0) >> 4) {
-        case 0x0: {
-            if ((opcode & 0xF) == 0x4) {
-                reg_ptr = &REG_B;
-            } else {
-                reg_ptr = &REG_C;
-            }
-            break;
-        }
-        case 0x1: {
-            if ((opcode & 0xF) == 0x4) {
-                reg_ptr = &REG_D;
-            } else {
-                reg_ptr = &REG_E;
-            }
-            break;
-        }
-        case 0x2: {
-            if ((opcode & 0xF) == 0x4) {
-                reg_ptr = &REG_H;
-            } else {
-                reg_ptr = &REG_L;
-            }
-            break;
-        }
-        case 0x3: {
-            if ((opcode & 0xC) == 0x4) {
-                reg_ptr = &REG_A;
-            }
-            break;
-        }
-    }
-    if (reg_ptr == NULL) {
-        uint8_t value_hl = GB_READ_8(REG_HL);
-        GB_FLAG_TEST_Z(value_hl - 1);
+    GB_OPCODE_DECODE_PTR(opcode>>3, reg_ptr);
+    if (reg_ptr != NULL) {
+        GB_FLAG_TEST_Z((int)*reg_ptr - 1);
         GB_FLAG_SET(FLAG_N);
-        GB_FLAG_TEST_SUB_H_8(value_hl, 1);
-        GB_WRITE_8(REG_HL, value_hl - 1);
-        GB_CYCLES(12);
-    } else {
-        GB_FLAG_TEST_Z(*reg_ptr - 1);
-        GB_FLAG_SET(FLAG_N);
-        GB_FLAG_TEST_SUB_H_8(*reg_ptr, 1);
-        *reg_ptr -= 1;
+        GB_FLAG_TEST_SUB_H_8((int)*reg_ptr, 1);
+        *reg_ptr = *reg_ptr - 1;
         GB_CYCLES(4);
+    } else {
+        int value = GB_READ_8(REG_HL);
+        GB_FLAG_TEST_Z(value - 1);
+        GB_FLAG_SET(FLAG_N);
+        GB_WRITE_8(REG_HL, value - 1);
+        GB_FLAG_TEST_SUB_H_8(value, 1);
+        GB_CYCLES(12);
     }
 }
 
@@ -369,7 +308,7 @@ GB_CPU_OP(gb_cpu_op_and_a_r) {
 
     REG_A &= reg_r;
 
-    GB_FLAG_TEST_Z(reg_a);
+    GB_FLAG_TEST_Z(REG_A);
     GB_FLAG_CLEAR(FLAG_N);
     GB_FLAG_SET(FLAG_H);
     GB_FLAG_CLEAR(FLAG_C);

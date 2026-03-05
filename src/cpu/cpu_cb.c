@@ -3,34 +3,6 @@
 #include "cpu/cpu_alu.h"
 #include "cpu/cpu_flags.h"
 
-#define GB_OPCODE_DECODE_PTR(opcode, x) do {\
-    switch(GB_CPU_ALU_WHICH_REG(opcode)) {\
-        case GB_OPCODE_DECODE_REG_A:\
-            x = &REG_A;\
-            break;\
-        case GB_OPCODE_DECODE_REG_B:\
-            x = &REG_B;\
-            break;\
-        case GB_OPCODE_DECODE_REG_C:\
-            x = &REG_C;\
-            break;\
-        case GB_OPCODE_DECODE_REG_D:\
-            x = &REG_D;\
-            break;\
-        case GB_OPCODE_DECODE_REG_E:\
-            x = &REG_E;\
-            break;\
-        case GB_OPCODE_DECODE_REG_H:\
-            x = &REG_H;\
-            break;\
-        case GB_OPCODE_DECODE_REG_L:\
-            x = &REG_L;\
-            break;\
-        case GB_OPCODE_DECODE_REG_HL:\
-            x = NULL;\
-            break;\
-    }\
-    } while (0)
 
 uint8_t GB_OPCODE_DECODE_BIT(uint8_t opcode) {
     return (opcode >> 3) & 0b111;
@@ -224,7 +196,7 @@ GB_CPU_OP(gb_cpu_cb_sra) {
     GB_OPCODE_DECODE_PTR(opcode, reg_ptr);
     if (reg_ptr) {
         original = *reg_ptr;
-        done = original >> 1;
+        done = original >> 1 | (original & 0b10000000);
         if (original & 0b00000001) {
             GB_FLAG_SET(FLAG_C);
         } else {

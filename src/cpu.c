@@ -15,6 +15,7 @@
 #include "cpu/cpu_alu_16.h"
 #include "cpu/cpu_control_flow.h"
 #include "cpu/cpu_misc.h"
+#include "ppu.h"
 
 gb_cpu_op_function_pointer opcode_function_table[256] = {NULL};
 gb_cpu_op_function_pointer opcode_function_table_cb[256] = {NULL};
@@ -30,21 +31,45 @@ gb_cpu* gb_cpu_create() {
     return cpu;
 }
 
-void gb_cpu_execute(gb_cpu* cpu, gb_memory* memory) {
+void gb_cpu_execute(gb_cpu* cpu, gb_ppu* ppu, gb_memory* memory) {
     if (cpu->running == 0) {
         return;
     }
+    //INTERRUPT HANDLING!
+    if (cpu->cpu_register->ime) {
+        if (gb_memory_read(memory, 0xFFFF) & gb_memory_read(memory, 0xFF0F) & 1) {
+            //VBLANK INTERRUPT REQUSTED AND CAN RUN!
+            GB_IME_DISABLE();
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            printf("VBLANK INTERRUPT CALLED!!!!!!!!\n");
+            cpu->cpu_register->sp -= 2;
+            gb_memory_write(memory, cpu->cpu_register->sp + 1, (cpu->cpu_register->pc >> 8) & 0xFF);
+            gb_memory_write(memory, cpu->cpu_register->sp, cpu->cpu_register->pc & 0xFF);
+            cpu->cpu_register->pc = 0x40;
+            gb_memory_write(memory, 0xFF0F, gb_memory_read(memory, 0xFF0F) & ~0x01); //Clear VBLANK Interrupt
+            exit(1);
+        }
+    }
+
     uint8_t opcode = gb_memory_read(memory, cpu->cpu_register->pc);
     cpu->cpu_register->pc++;
     //printf("%d: ", cpu->_executed_count);
     if(opcode_function_table[opcode] != NULL) {
         //printf("EXECUTING INSTRUCTION: 0x%02X\n", opcode);
-        if (gb_memory_read(memory, 0xFF02) == 0x81) {
-            char c = gb_memory_read(memory, 0xFF01);
-            printf("%c", c);
-            gb_memory_write(memory, 0xFF02, 0x0);
-	    }
         opcode_function_table[opcode](cpu, memory);
+        gb_ppu_step(ppu, memory, cpu->cycles);
+        cpu->cycles = 0;
     } else {
         printf("EXECUTING UNWRITTEN INSTRUCTION: 0x%02X\n", opcode);
         SDL_Delay(1000);
@@ -111,43 +136,43 @@ void gb_cpu_init() {
 
     //from cpu_alu
     //
-    for (uint8_t i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         opcode_function_table[(i << 4) + 0x4] = gb_cpu_op_inc_r;
     }
-    for (uint8_t i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         opcode_function_table[(i << 4) + 0x5] = gb_cpu_op_dec_r;
     }
-    for (uint8_t i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         opcode_function_table[(i << 4) + 0xC] = gb_cpu_op_inc_r;
     }
-    for (uint8_t i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         opcode_function_table[(i << 4) + 0xD] = gb_cpu_op_dec_r;
     }
     opcode_function_table[0x2f] = gb_cpu_op_cpl;
     opcode_function_table[0x3f] = gb_cpu_op_ccf;
     //
-    for (uint8_t i = 0; i < 8; i++) {
+    for (int i = 0; i < 8; i++) {
         opcode_function_table[0x80 + i] = gb_cpu_op_add_a_r;
     }
-    for (uint8_t i = 0; i < 8; i++) {
+    for (int i = 0; i < 8; i++) {
         opcode_function_table[0x88 + i] = gb_cpu_op_adc_a_r;
     }
-    for (uint8_t i = 0; i < 8; i++) { 
+    for (int i = 0; i < 8; i++) { 
         opcode_function_table[0x90 + i] = gb_cpu_op_sub_a_r;
     }
-    for (uint8_t i = 0; i < 8; i++) {
+    for (int i = 0; i < 8; i++) {
         opcode_function_table[0x98 + i] = gb_cpu_op_sbc_a_r;
     }
-    for (uint8_t i = 0; i < 8; i++) { 
+    for (int i = 0; i < 8; i++) { 
         opcode_function_table[0xA0 + i] = gb_cpu_op_and_a_r;
     }
-    for (uint8_t i = 0; i < 8; i++) {
+    for (int i = 0; i < 8; i++) {
         opcode_function_table[0xA8 + i] = gb_cpu_op_xor_a_r;
     }
-    for (uint8_t i = 0; i < 8; i++) { 
+    for (int i = 0; i < 8; i++) { 
         opcode_function_table[0xB0 + i] = gb_cpu_op_or_a_r;
     }
-    for (uint8_t i = 0; i < 8; i++) {
+    for (int i = 0; i < 8; i++) {
         opcode_function_table[0xB8 + i] = gb_cpu_op_cp_a_r;
     }
     opcode_function_table[0xC6] = gb_cpu_op_add_a_n8;

@@ -2,6 +2,7 @@
 #define _H_CPU
 
 
+#include "graphics.h"
 #include "memory.h"
 #include "cpu_register.h"
 #include "ppu.h"
@@ -77,6 +78,7 @@ typedef struct {
     gb_cpu_register* cpu_register;
     unsigned int cycles;
     unsigned int total_cycles;
+    unsigned int frame_cycles;
     unsigned int timer;
     unsigned int div_timer;
     int running;
@@ -91,7 +93,7 @@ extern gb_cpu_op_function_pointer opcode_function_table_cb[256];
 gb_cpu* gb_cpu_create();
 void gb_cpu_delete(gb_cpu* cpu);
 
-void gb_cpu_execute(gb_cpu* cpu, gb_ppu* ppu, gb_memory* memory);
+void gb_cpu_execute(gb_window* window, gb_cpu* cpu, gb_ppu* ppu, gb_memory* memory);
 
 void gb_cpu_init();
 void gb_cpu_init_extended_instructions();

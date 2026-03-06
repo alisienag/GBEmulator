@@ -13,5 +13,6 @@ typedef struct {
 void gb_window_init();
 
 gb_window* gb_window_create(unsigned int width, unsigned int height, const char* title);
+void gb_window_set_pixel(gb_window* window, unsigned int x, unsigned int y, uint8_t colour);
 void gb_window_delete(gb_window** window);
 #endif

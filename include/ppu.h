@@ -1,6 +1,7 @@
 #ifndef _H_PPU
 #define _H_PPU
 
+#include "graphics.h"
 #include "memory.h"
 
 #define GB_PPU_SCANLINE_DUR 456 //456 / 4 = 114
@@ -46,8 +47,11 @@ typedef struct {
 
 gb_ppu* gb_ppu_create();
 
-void gb_ppu_step(gb_ppu* ppu, gb_memory* mem, int cycles);
+void gb_ppu_step(gb_window* window, gb_ppu* ppu, gb_memory* mem, int cycles);
+void gb_ppu_draw_bg_scanline(gb_window* window, gb_ppu* ppu, gb_memory* mem);
+
 void gb_ppu_sync_from_mem(gb_ppu* ppu, gb_memory* mem);
 void gb_ppu_sync_to_mem(gb_ppu* ppu, gb_memory* mem);
+
 
 #endif

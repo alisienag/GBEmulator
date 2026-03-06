@@ -32,7 +32,7 @@ gb_cpu* gb_cpu_create() {
     return cpu;
 }
 
-void gb_cpu_execute(gb_cpu* cpu, gb_ppu* ppu, gb_memory* memory) {
+void gb_cpu_execute(gb_window* window, gb_cpu* cpu, gb_ppu* ppu, gb_memory* memory) {
     if (cpu->running == GB_CPU_STOPPED) {
         return;
     }
@@ -75,15 +75,17 @@ void gb_cpu_execute(gb_cpu* cpu, gb_ppu* ppu, gb_memory* memory) {
         cpu->cpu_register->pc++;
         if(opcode_function_table[opcode] != NULL) {
             opcode_function_table[opcode](cpu, memory);
-            gb_ppu_step(ppu, memory, cpu->cycles);
+            gb_ppu_step(window, ppu, memory, cpu->cycles);
             cpu->total_cycles += cpu->cycles;
+            cpu->frame_cycles += cpu->cycles;
             cpu->timer += cpu->cycles;
             cpu->div_timer += cpu->cycles;
             cpu->cycles = 0;
         }
     } else {
-        gb_ppu_step(ppu, memory, 4);
+        gb_ppu_step(window, ppu, memory, 4);
         cpu->total_cycles += 4;
+        cpu->frame_cycles += 4;
         cpu->timer += 4;
         cpu->div_timer += 4;
         cpu->cycles = 0;
@@ -115,6 +117,12 @@ void gb_cpu_execute(gb_cpu* cpu, gb_ppu* ppu, gb_memory* memory) {
             }
             gb_memory_write(memory, GB_TIMER_TIMA, tima);
         }
+    }
+    
+    if (cpu->frame_cycles >= 70224) {
+        SDL_RenderPresent(window->renderer);
+        SDL_Delay(17);
+        cpu->frame_cycles -= 70224;
     }
 
     cpu->_executed_count += 1;

@@ -14,7 +14,7 @@
 
 int main(int argc, char** argv) {
   gb_window_init();
-  gb_window *window = gb_window_create(160, 144, "hello");
+  gb_window *window = gb_window_create(160*4, 144*4, "hello");
   gb *console = gb_create();
   gb_cpu_register_dump(console->cpu->cpu_register);
   gb_bios_load(console, "../roms/dmg_boot.bin");
@@ -89,10 +89,10 @@ int main(int argc, char** argv) {
       }
     } else {
       counter--;
-      gb_cpu_execute(console->cpu, console->ppu, console->memory);
+      gb_cpu_execute(window, console->cpu, console->ppu, console->memory);
       continue;
     }
-    gb_cpu_execute(console->cpu, console->ppu, console->memory);
+    gb_cpu_execute(window, console->cpu, console->ppu, console->memory);
   }
   gb_delete(&console);
   gb_window_delete(&window);

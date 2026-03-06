@@ -1,5 +1,5 @@
 #include "ppu.h"
-#include "cpu.h"
+#include "graphics.h"
 #include "memory.h"
 #include <stdatomic.h>
 #include <stdlib.h>
@@ -25,15 +25,20 @@ void gb_ppu_sync_from_mem(gb_ppu* ppu, gb_memory* mem) {
     ppu->WX = gb_memory_read(mem, GB_PPU_WX);
 }
 
-void gb_ppu_step(gb_ppu* ppu, gb_memory* mem, int cycles) {
+void gb_ppu_step(gb_window* window, gb_ppu* ppu, gb_memory* mem, int cycles) {
     gb_ppu_sync_from_mem(ppu, mem);
     uint8_t old_mode = ppu->STAT & 0x3;
     uint8_t old_ly_comparison = (ppu->LY == ppu->LYC);
 
     ppu->scanline_counter += cycles;   
+
+
     if (ppu->scanline_counter >= GB_PPU_SCANLINE_DUR) {
         ppu->scanline_counter -= GB_PPU_SCANLINE_DUR;
         ppu->LY++;
+        if (ppu->LY < 144) {
+            gb_ppu_draw_bg_scanline(window, ppu, mem);
+        }
     }
     if (ppu->LY >= 154)
         ppu->LY = 0;
@@ -74,6 +79,44 @@ void gb_ppu_step(gb_ppu* ppu, gb_memory* mem, int cycles) {
     }
 
     gb_ppu_sync_to_mem(ppu, mem);
+}
+void gb_ppu_draw_bg_scanline(gb_window* window, gb_ppu* ppu, gb_memory* mem) {
+    uint16_t tilemap_start = 0;
+    uint16_t tiledata_start = 0;
+    if (ppu->LCDC & 0x8) {
+        tilemap_start = 0x9C00;  
+    } else {
+        tilemap_start = 0x9800;
+    }
+    if (ppu->LCDC & 0x10) {
+        tiledata_start = 0x8000;
+    } else {
+        tiledata_start = 0x9000;
+    }
+    uint8_t scx = ppu->SCX;
+    uint8_t scy = ppu->SCY;
+    for (int x = 0; x < 160; x++) {
+        uint8_t colour = 0;
+        uint8_t tilemap_x = ((scx + x) % 256) / 8;
+        uint8_t tilemap_y = ((scy + ppu->LY) % 256) / 8;
+        uint8_t tiledata_index = gb_memory_read(mem, tilemap_start + (tilemap_y * 32) + tilemap_x);
+        
+        uint8_t byte1;
+        uint8_t byte2;
+        if (tiledata_start == 0x8000) {
+            byte1 = gb_memory_read(mem, tiledata_start + (tiledata_index * 16) + (((scy + ppu->LY) % 8) * 2));
+            byte2 = gb_memory_read(mem, tiledata_start + (tiledata_index * 16) + (((scy + ppu->LY) % 8) * 2)+1);
+        } else {
+            byte1 = gb_memory_read(mem, tiledata_start + (int8_t)(tiledata_index * 16) + (((scy + ppu->LY) % 8) * 2));
+            byte2 = gb_memory_read(mem, tiledata_start + (int8_t)(tiledata_index * 16) + (((scy + ppu->LY) % 8) * 2)+1);
+        }
+
+        int bit_index = (scx + x) % 8;
+
+        colour = ((byte1 >> (7 - bit_index)) & 0x1) | (((byte2 >> (7 - bit_index)) & 0x1) << 1);
+        
+        gb_window_set_pixel(window, x, ppu->LY, colour);
+    }
 }
 
 void gb_ppu_sync_to_mem(gb_ppu* ppu, gb_memory* mem) {
